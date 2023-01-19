@@ -1,5 +1,5 @@
 const HelloWorld = () =>{
-return "Hello Benjamin"
+return "Hello Benjamin";
 
 };
 
