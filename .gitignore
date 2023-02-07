@@ -25,9 +25,6 @@ project.xcworkspace
 # Android/IntelliJ
 #
 build/
-eas.json
-app.json
-
 .idea
 .gradle
 local.properties

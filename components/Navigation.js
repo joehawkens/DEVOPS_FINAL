@@ -104,7 +104,7 @@ const AboutStackScreen = () =>{
 }
 
 
-const helpStackScreen = () =>{
+const HelpStackScreen = () =>{
     return(
      <Stack.Navigator
      
@@ -162,7 +162,7 @@ export default function Navigation (props) {
             />
             <Tab.Screen name="TabCounter" 
             // component={counterStackScreen}
-            children={()=><CounterStackScreen setHomeTodayScore={props.setHomeTodayScore}/>}
+            children={()=><CounterStackScreen/>}
             options={{
                 // tabBarColor:'pink',
                    tabBarLabel: 'Counter',
@@ -192,7 +192,7 @@ export default function Navigation (props) {
                   }}
             />
             <Tab.Screen name="TabHelp" 
-            component={helpStackScreen}
+            component={HelpStackScreen}
             options={{
                 // tabBarColor:'pink',
                    tabBarLabel: 'Help',

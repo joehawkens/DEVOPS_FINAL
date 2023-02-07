@@ -1,3 +1,4 @@
+
 import React, { useEffect,useRef, useState } from 'react';
 import { TouchableOpacity, StyleSheet, Text, View, Image, SafeAreaView , Share, ScrollView, Button} from 'react-native';
 import { Card, CardTitle, CardContent} from 'react-native-material-cards';
