@@ -77,7 +77,7 @@ style={styles.button} >
 </TouchableOpacity> */}
  <Text>{notification}</Text>
 <TouchableOpacity
-  onPress={"Close"}
+  onPress={submit}
   style={styles.button}>
   <Text style={styles.text2}>Submit</Text>
 </TouchableOpacity>
