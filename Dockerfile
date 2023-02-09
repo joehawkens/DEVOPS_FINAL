@@ -6,3 +6,4 @@ COPY package.json ./
 RUN npm install
 COPY . ./
 RUN npm run test
+RUN npx eas-cli build --profile preview --platform android --non-interactive
