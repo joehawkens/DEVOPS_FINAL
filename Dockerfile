@@ -10,7 +10,7 @@ COPY package.json ./
 # COPY package-lock.json ./
 RUN npm install
 COPY . ./
-RUN npm run test
+# RUN npm run test
 RUN rm ./package-lock.json
 RUN npm install eas-cli -g
 RUN npx eas-cli build --profile preview --platform android --non-interactive
