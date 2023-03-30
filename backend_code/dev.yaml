@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stedi-joe-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stedi-joe-dev
+  template:
+    metadata:
+      labels: 
+        app: stedi-joe-dev
+    spec:
+      containers:
+        - name: stedi-joe-dev
+          image: gcr.io/gurlpower/joe-stedi-api
+          env:
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: redis-secrets-prod
+                  key: REDIS_PASS
+            - name: REDIS_HOST
+              value: "redis-stedi-prod"
+            - name: REDIS_PORT
+              value: "6379"
+            - name: REDIS_DB
+              value: "0"
+            - name: KAFKA_BROKER
+              value: "localhost:9092"
+          ports: 
+            - containerPort: 443
+          resources:
+            limits:
+              cpu: ".5"
+              memory: "500Mi"
+            requests: 
+              cpu: ".25"
+              memory: "250Mi"
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 4567
+            initialDelaySeconds: 10
+            periodSeconds: 3
+
+
+
+            
+---
+# NODE PORT
+apiVersion: v1
+kind: Service
+metadata:
+  name: stedi-joe-nodeport
+spec:
+  selector:
+    app: stedi-joe-dev
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 4567
+---
+# CERTIFICATE
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: stedi-joe-certificate
+spec:
+  domains:
+    - joe.cit262.com
+---
+#INGRESS
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stedi-joe-ingress
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: stedi-joe-public
+  # needs to match the name of the managed certificate
+    networking.gke.io/managed-certificates: stedi-joe-certificate
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+          # needs to match the name of the NodePort service
+            name: stedi-joe-nodeport
+            port:
+              number: 80

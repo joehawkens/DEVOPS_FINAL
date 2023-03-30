@@ -1,0 +1,4 @@
+APPLIES YAML CHANGES - kubectl apply -f dev.yaml
+START THE POD - kubectl scale deployment stedi-joe-dev --replicas=0
+LIST PODS - kubectl get pods
+test run
